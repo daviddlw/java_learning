@@ -3,11 +3,7 @@ package com.david.reflect;
 import java.lang.reflect.Array;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.util.Arrays;
-
-import org.apache.commons.lang3.ClassUtils.Interfaces;
 
 public class ReflectionDemo
 {
@@ -42,6 +38,9 @@ public class ReflectionDemo
 		}
 	}
 
+	/**
+	 * 反射父类demo
+	 */
 	private static void superClassDemo()
 	{
 		Class<?> c = User.class;
