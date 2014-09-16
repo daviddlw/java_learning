@@ -16,16 +16,35 @@
 	<bean id="car2" class="com.david.spring.beans.Car">
 		<constructor-arg name="brand" value="奥迪"></constructor-arg>
 		<constructor-arg name="corp">
-			<value><![CDATA[<"奥迪"有限公司>]]></value>
+			<value><![CDATA[<奥迪有限公司>]]></value>
 		</constructor-arg>
 		<constructor-arg name="price" value="88888.86"></constructor-arg>
 		<constructor-arg name="maxSpeed" type="int">
 			<value>123456</value>
 		</constructor-arg>
 	</bean>
-		<!-- 通过构造方法配置bean的属性 -->
+	<!-- 通过构造方法配置bean的属性 -->
 	<bean id="car3" class="com.david.spring.beans.Car">
 		<constructor-arg value="888" type="double"></constructor-arg>
 		<constructor-arg value="宝马X5" index="1"></constructor-arg>
+	</bean>
+
+	<bean id="person" class="com.david.spring.beans.Person">
+		<constructor-arg value="888" name="age"></constructor-arg>
+		<constructor-arg value="荣威350" name="name"></constructor-arg>
+		<constructor-arg ref="car2" name="car"></constructor-arg>
+	</bean>
+
+	<bean id="person2" class="com.david.spring.beans.Person">
+		<constructor-arg value="888" name="age"></constructor-arg>
+		<constructor-arg value="荣威350" name="name"></constructor-arg>
+		<property name="car4">
+			<bean class="com.david.spring.beans.Car">
+				<constructor-arg name="brand" value="卡迪拉克"></constructor-arg>
+				<constructor-arg name="corp" value="凯迪拉格有限公司"></constructor-arg>
+				<constructor-arg name="price" value="89898989.1"></constructor-arg>
+			</bean>
+		</property>
+		<constructor-arg ref="car4" name="car"></constructor-arg>
 	</bean>
 </beans>

@@ -55,5 +55,11 @@ public class MainRun
 		
 		Car car3 = (Car)ctx.getBean("car3");
 		System.out.println(car3);
+		
+		Person p1 = (Person)ctx.getBean("person");
+		System.out.println(p1);
+		
+		Person p2 = (Person)ctx.getBean("person2");
+		System.out.println(p2);
 	}
 }
