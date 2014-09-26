@@ -36,15 +36,30 @@
 	</bean>
 
 	<bean id="person2" class="com.david.spring.beans.Person">
-		<constructor-arg value="888" name="age"></constructor-arg>
 		<constructor-arg value="荣威350" name="name"></constructor-arg>
-		<property name="car4">
+		<constructor-arg value="888" name="age"></constructor-arg>
+		<constructor-arg>
 			<bean class="com.david.spring.beans.Car">
 				<constructor-arg name="brand" value="卡迪拉克"></constructor-arg>
 				<constructor-arg name="corp" value="凯迪拉格有限公司"></constructor-arg>
 				<constructor-arg name="price" value="89898989.1"></constructor-arg>
+				<constructor-arg name="maxSpeed" value="123456"></constructor-arg>
 			</bean>
-		</property>
-		<constructor-arg ref="car4" name="car"></constructor-arg>
+		</constructor-arg>
+	</bean>
+
+	<bean id="person3" class="com.david.spring.beans.Person">
+		<constructor-arg value="123456" name="age"></constructor-arg>
+		<constructor-arg value="荣威789" name="name"></constructor-arg>
+		<constructor-arg>
+			<null />
+		</constructor-arg>
+	</bean>
+
+	<bean id="person4" class="com.david.spring.beans.Person">
+		<constructor-arg value="09876" name="age"></constructor-arg>
+		<constructor-arg value="测试级联属性person" name="name"></constructor-arg>
+		<constructor-arg ref="car"></constructor-arg>
+		<property name="car.maxSpeed" value="999"></property>
 	</bean>
 </beans>

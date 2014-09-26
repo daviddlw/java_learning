@@ -61,5 +61,11 @@ public class MainRun
 		
 		Person p2 = (Person)ctx.getBean("person2");
 		System.out.println(p2);
+		
+		Person p3 = (Person)ctx.getBean("person3");
+		System.out.println(p3);
+		
+		Person p4 = (Person)ctx.getBean("person4");
+		System.out.println(p4);
 	}
 }
