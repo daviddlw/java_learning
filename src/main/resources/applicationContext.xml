@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:util="http://www.springframework.org/schema/util"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.0.xsd">
 	<!-- 配置bean class: bean的完全限定名，通过分社的方式在IOC容器中创建Bean，所以要求Bean中必须有无参数的构造器 id：表示容器中的bean，ID唯一s -->
 	<bean id="helloWorld" class="com.david.spring.beans.HelloWorld">
 		<property name="name" value="david.dai"></property>
@@ -60,6 +62,76 @@
 		<constructor-arg value="09876" name="age"></constructor-arg>
 		<constructor-arg value="测试级联属性person" name="name"></constructor-arg>
 		<constructor-arg ref="car"></constructor-arg>
+		<!-- 为级联属性赋值，注意：属性需要先初始化实体后才可以为级联属性赋值，否则会有一场，Strut2 回为 属性赋上默认值 -->
 		<property name="car.maxSpeed" value="999"></property>
 	</bean>
+	<!-- 为集合属性赋值 -->
+	<bean id="person5" class="com.david.spring.beans.PersonCollection">
+		<property name="name" value="测试集合属性名称"></property>
+		<property name="age" value="8989"></property>
+		<property name="carList">
+			<!-- array, set和list一样 -->
+			<list>
+				<ref bean="car" />
+				<ref bean="car2" />
+				<ref bean="car3" />
+				<bean id="fordCar" class="com.david.spring.beans.Car">
+					<property name="brand" value="长安福特"></property>
+					<property name="corp" value="长安福特有限公司"></property>
+					<property name="maxSpeed" value="999"></property>
+					<property name="price" value="150000"></property>
+				</bean>
+			</list>
+		</property>
+	</bean>
+
+	<!-- 配置map属性值 -->
+	<bean id="newPerson" class="com.david.spring.beans.NewPerson">
+		<property name="name" value="david.dai"></property>
+		<property name="age" value="27"></property>
+		<property name="mapCar">
+			<map key-type="java.lang.String" value-type="com.david.spring.beans.Car">
+				<entry key="david.dai" value-ref="car"></entry>
+				<entry key="lave.zhang" value-ref="car2"></entry>
+			</map>
+		</property>
+	</bean>
+
+	<!-- 为properties属性赋值 -->
+	<bean id="customProperties" class="com.david.spring.beans.DataSource">
+		<property name="dsProperties">
+			<props>
+				<prop key="userName">root</prop>
+				<prop key="password">123456</prop>
+				<prop key="url">jdbc:mysql://localhost:8080</prop>
+				<prop key="driverClass">com.mysql.jdbc.Driver</prop>
+			</props>
+		</property>
+	</bean>
+
+	<!-- 引用独立集合bean -->
+	<bean id="containsCarListPerson" class="com.david.spring.beans.PersonCollection">
+		<property name="age" value="1234567890"></property>
+		<property name="name" value="测试独立beanPerson"></property>
+		<property name="carList" ref="carlist"></property>
+	</bean>
+
+	<!-- 使用简化的p属性注入bean -->
+	<bean id="abbreviationBean" class="com.david.spring.beans.PersonCollection"
+		p:age="5858" p:name="简化缩略属性beans" p:carList-ref="carlist" />
+
+	<!-- 抽象出集合类配置成独立的bean，以供其他bean引用 ，注意需要导入util命名空间 -->
+	<util:list id="carlist">
+		<ref bean="car" />
+		<ref bean="car2" />
+		<ref bean="car3" />
+	</util:list>
+
+	<!-- 使用自动装配，如果bean的名字和javabean名字一样，byname则会自动装配，byType如果有类型匹配的也会 自动装配，但是如果有两个一模一样的类型则会抛出异常 -->
+	<bean id="autoWiredAddress" class="com.david.spring.beans.Address"
+		p:city="上海" p:street="徐家汇路" />
+	<bean id="autoWiredCar" class="com.david.spring.beans.Car"
+		p:brand="自动装配brand" p:corp="自动装配crop" />
+	<bean id="autoWiredBean" class="com.david.spring.beans.AutoWiredPerson"
+		p:name="自动装配bean" autowire="byName"></bean>
 </beans>

@@ -5,10 +5,13 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 public class MainRun
 {
+	private static ApplicationContext ctx = new ClassPathXmlApplicationContext("applicationContext.xml");
+
 	public static void main(String[] args)
 	{
 		// runWithSpringBean();
-		constructorDIDemo();
+		// constructorDIDemo();
+		autoWiredDemo();
 	}
 
 	private static void runWithCommon()
@@ -44,28 +47,59 @@ public class MainRun
 		 */
 	}
 
+	/**
+	 * spring注入bean示例
+	 */
 	private static void constructorDIDemo()
 	{
-		ApplicationContext ctx = new ClassPathXmlApplicationContext("applicationContext.xml");
-		Car car = (Car)ctx.getBean("car");
+
+		Car car = (Car) ctx.getBean("car");
 		System.out.println(car);
-		
-		Car car2 = (Car)ctx.getBean("car2");
+
+		Car car2 = (Car) ctx.getBean("car2");
 		System.out.println(car2);
-		
-		Car car3 = (Car)ctx.getBean("car3");
+
+		Car car3 = (Car) ctx.getBean("car3");
 		System.out.println(car3);
-		
-		Person p1 = (Person)ctx.getBean("person");
+
+		Person p1 = (Person) ctx.getBean("person");
 		System.out.println(p1);
-		
-		Person p2 = (Person)ctx.getBean("person2");
+
+		Person p2 = (Person) ctx.getBean("person2");
 		System.out.println(p2);
-		
-		Person p3 = (Person)ctx.getBean("person3");
+
+		Person p3 = (Person) ctx.getBean("person3");
 		System.out.println(p3);
-		
-		Person p4 = (Person)ctx.getBean("person4");
+
+		Person p4 = (Person) ctx.getBean("person4");
 		System.out.println(p4);
+
+		PersonCollection p5 = (PersonCollection) ctx.getBean("person5");
+		System.out.println(p5);
+
+		NewPerson p6 = (NewPerson) ctx.getBean("newPerson");
+		System.out.println(p6);
+
+		DataSource ds = (DataSource) ctx.getBean("customProperties");
+		System.out.println(ds);
+
+		System.err.println("=======================================");
+		PersonCollection pc2 = (PersonCollection) ctx.getBean("containsCarListPerson");
+		System.out.println(pc2);
+		for (Car item : pc2.getCarList())
+		{
+			System.out.println(item);
+		}
+
+		System.err.println("===============================");
+		PersonCollection pc3 = (PersonCollection) ctx.getBean("abbreviationBean");
+		System.out.println(pc3);
+
+	}
+
+	private static void autoWiredDemo()
+	{
+		AutoWiredPerson awp = (AutoWiredPerson) ctx.getBean("autoWiredBean");
+		System.out.println(awp);
 	}
 }
