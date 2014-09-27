@@ -6,12 +6,14 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 public class MainRun
 {
 	private static ApplicationContext ctx = new ClassPathXmlApplicationContext("applicationContext.xml");
+	private static ApplicationContext brCtx = new ClassPathXmlApplicationContext("beanRelation.xml");
 
 	public static void main(String[] args)
 	{
 		// runWithSpringBean();
 		// constructorDIDemo();
-		autoWiredDemo();
+		// autoWiredDemo();
+		springRelationDemo();
 	}
 
 	private static void runWithCommon()
@@ -97,9 +99,33 @@ public class MainRun
 
 	}
 
+	/**
+	 * 自动装配
+	 */
 	private static void autoWiredDemo()
 	{
 		AutoWiredPerson awp = (AutoWiredPerson) ctx.getBean("autoWiredBean");
 		System.out.println(awp);
 	}
+
+	/**
+	 * spring bean之间的关系
+	 */
+	private static void springRelationDemo()
+	{
+		// Address address = (Address) brCtx.getBean("address");
+		// System.out.println(address);
+		//
+		// Address address2 = (Address) brCtx.getBean("address2");
+		// System.out.println(address2);
+		//
+		// AutoWiredPerson awp = (AutoWiredPerson) brCtx.getBean("person");
+		// System.out.println(awp);
+
+		Car car = (Car) brCtx.getBean("scopeCarBean");
+		Car car2 = (Car) brCtx.getBean("scopeCarBean");
+
+		System.out.println(car == car2);
+	}
+
 }

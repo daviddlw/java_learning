@@ -10,6 +10,7 @@ public class Car
 	public Car()
 	{
 		super(); // TODO Auto-generated constructor stub
+		System.err.println("Car's Constructor");
 	}
 
 	public Car(String brand, String corp, double price)

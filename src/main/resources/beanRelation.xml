@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:util="http://www.springframework.org/schema/util"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.0.xsd">
+	<!-- 如果bean的abstract为true，则不能被IOC容器实例化，只能用来被继承，抽象可以帮助实现模板bean -->
+	<bean id="address" class="com.david.spring.beans.Address" p:city="上海市"
+		p:street="黄浦区"></bean>
+	<bean id="address2" p:city="上海" p:street="闵行区" parent="address"></bean>
+
+	<!-- depend-on依赖bean -->
+	<bean id="car" class="com.david.spring.beans.Car"></bean>
+	<bean id="person" class="com.david.spring.beans.AutoWiredPerson"
+		p:name="测试依赖beans" p:autoWiredAddress-ref="address2" depends-on="car" />
+
+	<!-- bean之间的关系：继承，依赖 -->
+	<!-- spring bean的作用域 , singleton返回单个实例，prototype每次new一个新的实例，singleton容器初始化的时候创建bean对象
+	prototype容器初始化时候不创建bean, 只在调用的时候创建-->
+	<bean id="scopeCarBean" scope="prototype" class="com.david.spring.beans.Car"
+		p:brand="测试car作用域" p:corp="测试car作用域corp" p:price="8989" />
+</beans>
