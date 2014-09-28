@@ -18,7 +18,8 @@ public class MainRun
 		// autoWiredDemo();
 		// springRelationDemo();
 		// springOutfileBeanDemo();
-		spelSpringDemo();
+		// spelSpringDemo();
+		springLifeTimeDemo();
 	}
 
 	private static void runWithCommon()
@@ -145,9 +146,24 @@ public class MainRun
 		System.out.println("Driver: " + cpds.getDriverClass());
 	}
 
+	/**
+	 * spring spel表达式
+	 */
 	private static void spelSpringDemo()
 	{
 		Car car = (Car) brCtx.getBean("spelBean");
 		System.out.println(car);
+	}
+
+	/**
+	 * spring IOC容器管理bean对象的生命周期
+	 */
+	private static void springLifeTimeDemo()
+	{
+		System.out.println("1. 通过构造器或者工厂方法创建bean对象");
+		System.out.println("2. 为bean对象属性赋值和引用相关bean对象");
+		System.out.println("3. 调用bean的初始化方法");
+		System.out.println("4. 可以使用bean对象了");
+		System.out.println("5. 调用bean的销毁方法");
 	}
 }

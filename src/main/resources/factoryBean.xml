@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<bean id="car1" class="com.david.spring.factorybean.StaticBeanFactory"
+		factory-method="getCar">
+		<constructor-arg name="name" value="audi"></constructor-arg>
+	</bean>
+
+	<bean id="instanceFactory" class="com.david.spring.factorybean.InstanceBeanFactory">
+	</bean>
+
+	<bean id="car2" class="com.david.spring.factorybean.InstanceBeanFactory"
+		factory-bean="instanceFactory" factory-method="getCar">
+		<constructor-arg name="name" value="bmw"></constructor-arg>
+		<constructor-arg name="price" value="6868"></constructor-arg>
+	</bean>
+
+</beans>
