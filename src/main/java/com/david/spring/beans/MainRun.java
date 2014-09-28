@@ -3,6 +3,9 @@ package com.david.spring.beans;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
+import com.mchange.v2.c3p0.ComboPooledDataSource;
+import com.mchange.v2.c3p0.DataSources;
+
 public class MainRun
 {
 	private static ApplicationContext ctx = new ClassPathXmlApplicationContext("applicationContext.xml");
@@ -13,7 +16,9 @@ public class MainRun
 		// runWithSpringBean();
 		// constructorDIDemo();
 		// autoWiredDemo();
-		springRelationDemo();
+		// springRelationDemo();
+		// springOutfileBeanDemo();
+		spelSpringDemo();
 	}
 
 	private static void runWithCommon()
@@ -128,4 +133,21 @@ public class MainRun
 		System.out.println(car == car2);
 	}
 
+	/**
+	 * spring读取外部文件
+	 */
+	private static void springOutfileBeanDemo()
+	{
+		ComboPooledDataSource cpds = (ComboPooledDataSource) brCtx.getBean(ComboPooledDataSource.class);
+		System.out.println("User: " + cpds.getUser());
+		System.out.println("Password: " + cpds.getPassword());
+		System.out.println("Url: " + cpds.getJdbcUrl());
+		System.out.println("Driver: " + cpds.getDriverClass());
+	}
+
+	private static void spelSpringDemo()
+	{
+		Car car = (Car) brCtx.getBean("spelBean");
+		System.out.println(car);
+	}
 }
