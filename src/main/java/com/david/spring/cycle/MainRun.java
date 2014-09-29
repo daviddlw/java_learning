@@ -4,7 +4,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 public class MainRun
 {
-	private static ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext("springCycle.xml");
+	private static ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext("spring-cycle.xml");
 
 	public static void main(String[] args)
 	{

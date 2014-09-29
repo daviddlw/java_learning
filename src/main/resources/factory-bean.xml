@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<!-- 在对接引用第三方类库的时候比较有用 -->
+	<bean id="humanFactoryBean" class="com.david.spring.factorybean.HumanFactoryBean">
+		<property name="type" value="male"></property>
+	</bean>
+</beans>

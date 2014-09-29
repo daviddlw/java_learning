@@ -7,9 +7,7 @@
 	</configSuffixes>
 	<enableImports><![CDATA[false]]></enableImports>
 	<configs>
-		<config>src/main/resources/beanRelation.xml</config>
-		<config>src/main/resources/springCycle.xml</config>
-		<config>src/main/resources/factoryBean.xml</config>
+		<config>src/main/resources/factory-bean.xml</config>
 	</configs>
 	<autoconfigs>
 	</autoconfigs>

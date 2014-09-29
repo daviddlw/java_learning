@@ -8,7 +8,7 @@ import com.mchange.v2.c3p0.ComboPooledDataSource;
 
 public class MainRun
 {
-	private static ApplicationContext brCtx = new ClassPathXmlApplicationContext("beanRelation.xml");
+	private static ApplicationContext brCtx = new ClassPathXmlApplicationContext("bean-relation.xml");
 
 	public static void main(String[] args)
 	{
