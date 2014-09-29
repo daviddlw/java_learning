@@ -1,8 +1,14 @@
-package com.david.spring.factorybean;
+package com.david.spring.factory;
 
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * 通过静态工厂方法构造bean
+ * 
+ * @author pc
+ * 
+ */
 public class StaticBeanFactory
 {
 	private static Map<String, Car> rsMap = new HashMap<String, Car>();

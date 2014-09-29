@@ -1,11 +1,11 @@
-package com.david.spring.factorybean;
+package com.david.spring.factory;
 
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 public class MainRun
 {
-	private static ApplicationContext ctx = new ClassPathXmlApplicationContext("factoryBean.xml");
+	private static ApplicationContext ctx = new ClassPathXmlApplicationContext("factory.xml");
 	public static void main(String[] args)
 	{
 		// TODO Auto-generated method stub

@@ -3,21 +3,17 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
-	<bean id="car1" class="com.david.spring.factorybean.StaticBeanFactory"
+	<bean id="car1" class="com.david.spring.factory.StaticBeanFactory"
 		factory-method="getCar">
 		<constructor-arg name="name" value="audi"></constructor-arg>
 	</bean>
 
-	<bean id="instanceFactory" class="com.david.spring.factorybean.InstanceBeanFactory">
+	<bean id="instanceFactory" class="com.david.spring.factory.InstanceBeanFactory">
 	</bean>
 
-	<bean id="car2" class="com.david.spring.factorybean.InstanceBeanFactory"
+	<bean id="car2" class="com.david.spring.factory.InstanceBeanFactory"
 		factory-bean="instanceFactory" factory-method="getCar">
 		<constructor-arg name="name" value="bmw"></constructor-arg>
-		<constructor-arg name="price" value="6868"></constructor-arg>
 	</bean>
-
-	<!-- bean的后置处理器不需要特别指明ID，IOC会自动识别是一个BeanPostProcessor -->
-	<bean class="com.david.spring.cycle.MyBeanPostProcessor"></bean>
 
 </beans>

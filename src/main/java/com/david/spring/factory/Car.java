@@ -1,4 +1,4 @@
-package com.david.spring.factorybean;
+package com.david.spring.factory;
 
 public class Car
 {
