@@ -9,17 +9,15 @@ import com.mchange.v2.c3p0.DataSources;
 public class MainRun
 {
 	private static ApplicationContext ctx = new ClassPathXmlApplicationContext("applicationContext.xml");
-	private static ApplicationContext brCtx = new ClassPathXmlApplicationContext("beanRelation.xml");
 
 	public static void main(String[] args)
 	{
 		// runWithSpringBean();
 		// constructorDIDemo();
 		// autoWiredDemo();
-		// springRelationDemo();
 		// springOutfileBeanDemo();
 		// spelSpringDemo();
-		springLifeTimeDemo();
+		// springLifeTimeDemo();
 	}
 
 	private static void runWithCommon()
@@ -114,56 +112,4 @@ public class MainRun
 		System.out.println(awp);
 	}
 
-	/**
-	 * spring bean之间的关系
-	 */
-	private static void springRelationDemo()
-	{
-		// Address address = (Address) brCtx.getBean("address");
-		// System.out.println(address);
-		//
-		// Address address2 = (Address) brCtx.getBean("address2");
-		// System.out.println(address2);
-		//
-		// AutoWiredPerson awp = (AutoWiredPerson) brCtx.getBean("person");
-		// System.out.println(awp);
-
-		Car car = (Car) brCtx.getBean("scopeCarBean");
-		Car car2 = (Car) brCtx.getBean("scopeCarBean");
-
-		System.out.println(car == car2);
-	}
-
-	/**
-	 * spring读取外部文件
-	 */
-	private static void springOutfileBeanDemo()
-	{
-		ComboPooledDataSource cpds = (ComboPooledDataSource) brCtx.getBean(ComboPooledDataSource.class);
-		System.out.println("User: " + cpds.getUser());
-		System.out.println("Password: " + cpds.getPassword());
-		System.out.println("Url: " + cpds.getJdbcUrl());
-		System.out.println("Driver: " + cpds.getDriverClass());
-	}
-
-	/**
-	 * spring spel表达式
-	 */
-	private static void spelSpringDemo()
-	{
-		Car car = (Car) brCtx.getBean("spelBean");
-		System.out.println(car);
-	}
-
-	/**
-	 * spring IOC容器管理bean对象的生命周期
-	 */
-	private static void springLifeTimeDemo()
-	{
-		System.out.println("1. 通过构造器或者工厂方法创建bean对象");
-		System.out.println("2. 为bean对象属性赋值和引用相关bean对象");
-		System.out.println("3. 调用bean的初始化方法");
-		System.out.println("4. 可以使用bean对象了");
-		System.out.println("5. 调用bean的销毁方法");
-	}
 }

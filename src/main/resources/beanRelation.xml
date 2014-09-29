@@ -5,21 +5,6 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.0.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd">
-	<!-- 如果bean的abstract为true，则不能被IOC容器实例化，只能用来被继承，抽象可以帮助实现模板bean -->
-	<bean id="address" class="com.david.spring.beans.Address" p:city="上海市"
-		p:street="黄浦区"></bean>
-	<bean id="address2" p:city="上海" p:street="闵行区" parent="address"></bean>
-
-	<!-- depend-on依赖bean -->
-	<bean id="car" class="com.david.spring.beans.Car"></bean>
-	<bean id="person" class="com.david.spring.beans.AutoWiredPerson"
-		p:name="测试依赖beans" p:autoWiredAddress-ref="address2" depends-on="car" />
-
-	<!-- bean之间的关系：继承，依赖 -->
-	<!-- spring bean的作用域 , singleton返回单个实例，prototype每次new一个新的实例，singleton容器初始化的时候创建bean对象 
-		prototype容器初始化时候不创建bean, 只在调用的时候创建 -->
-	<bean id="scopeCarBean" scope="prototype" class="com.david.spring.beans.Car"
-		p:brand="测试car作用域" p:corp="测试car作用域corp" p:price="8989" />
 
 	<context:property-placeholder location="classpath:dbconfig.properties" />
 	<!-- 配置c3p0属性文件 -->
@@ -29,13 +14,35 @@
 		<property name="jdbcUrl" value="${db.url}"></property>
 		<property name="driverClass" value="${db.driver}"></property>
 	</bean>
-	
-	<bean id="spelBean" class="com.david.spring.beans.Car">
+
+	<bean id="test" class="com.david.spring.relation.Car">
+		<property name="brand" value="测试brand"></property>
+		<property name="corp" value="测试corp"></property>
+		<property name="maxSpeed" value="999"></property>
+	</bean>
+
+	<!-- 如果bean的abstract为true，则不能被IOC容器实例化，只能用来被继承，抽象可以帮助实现模板bean -->
+	<bean id="address" class="com.david.spring.relation.Address"
+		p:city="上海市" p:street="黄浦区"></bean>
+	<bean id="address2" p:city="上海" p:street="闵行区" parent="address"></bean>
+
+	<!-- depend-on依赖bean -->
+	<bean id="car" class="com.david.spring.relation.Car"></bean>
+	<bean id="person" class="com.david.spring.relation.AutoWiredPerson"
+		p:name="测试依赖beans" depends-on="car" />
+
+	<!-- bean之间的关系：继承，依赖 -->
+	<!-- spring bean的作用域 , singleton返回单个实例，prototype每次new一个新的实例，singleton容器初始化的时候创建bean对象 
+		prototype容器初始化时候不创建bean, 只在调用的时候创建 -->
+	<bean id="scopeCarBean" scope="singleton" class="com.david.spring.relation.Car"
+		p:brand="测试car作用域" p:corp="测试car作用域corp" p:price="8989" />
+
+	<bean id="spelBean" class="com.david.spring.relation.Car">
 		<property name="brand" value="#{address.city + '_' + address.street}"></property>
 		<property name="price" value="#{T(java.lang.Math).PI}"></property>
-		<property name="maxSpeed" value="#{T(java.lang.Math).PI * 10}"></property>
+		<property name="maxSpeed" value="#{T(java.lang.Math).PI 
+		* 10}"></property>
 	</bean>
-	
-	<!-- bean的后置处理器不需要特别指明ID，IOC会自动识别是一个BeanPostProcessor -->
-	<bean class="com.david.spring.cycle.MyBeanPostProcessor"></bean>
+
+
 </beans>
