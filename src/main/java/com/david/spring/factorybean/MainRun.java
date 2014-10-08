@@ -15,7 +15,10 @@ public class MainRun
 
 	private static void factoryBeanDemo()
 	{
-		AbstractHuman human = (AbstractHuman) ctx.getBean("humanFactoryBean");
-		System.out.println(human);
+		AbstractHuman human = (AbstractHuman) ctx.getBean("humanFactoryBean");		
+		AbstractHuman human2  = (AbstractHuman)ctx.getBean("humanFactoryBean");
+		
+		System.out.println(human.hashCode());
+		System.out.println(human2.hashCode());
 	}
 }
