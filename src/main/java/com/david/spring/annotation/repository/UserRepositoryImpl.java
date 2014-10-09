@@ -2,7 +2,7 @@ package com.david.spring.annotation.repository;
 
 import org.springframework.stereotype.Repository;
 
-@Repository
+@Repository("userRepository")
 public class UserRepositoryImpl implements IUserRepository
 {
 	@Override
