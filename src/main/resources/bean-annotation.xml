@@ -11,7 +11,7 @@
 			/> -->
 		<!-- <context:include-filter type="annotation" expression="org.springframework.stereotype.Repository" 
 			/> -->
-		<context:exclude-filter type="assignable"
-			expression="com.david.spring.annotation.repository.UserRepositoryImpl" />
+	<!-- <context:exclude-filter type="assignable" expression="com.david.spring.annotation.repository.UserRepositoryImpl" 
+		/> -->
 	</context:component-scan>
 </beans>

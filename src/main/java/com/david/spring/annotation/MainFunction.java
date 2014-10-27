@@ -12,7 +12,8 @@ public class MainFunction
 
 	public static void main(String[] args)
 	{
-		runTest();
+		// runTest();
+		autowiredDemo();
 	}
 
 	private static void runTest()
@@ -23,12 +24,20 @@ public class MainFunction
 
 		UserService userService = (UserService) ctx.getBean("userService");
 		System.out.println(userService);
-		
+
 		UserController userController = (UserController) ctx.getBean("userController");
 		System.out.println(userController);
 
 		IUserRepository userRepository = (IUserRepository) ctx.getBean("userRepository");
 		System.out.println(userRepository);
+	}
+
+	private static void autowiredDemo()
+	{
+		ApplicationContext ctx = new ClassPathXmlApplicationContext("bean-annotation.xml");
+		UserController userController = (UserController) ctx.getBean("userController");
+		System.out.println(userController);
+		userController.display();
 	}
 
 }
