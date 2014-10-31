@@ -9,6 +9,7 @@
 	<configs>
 		<config>src/main/resources/factory-bean.xml</config>
 		<config>src/main/resources/bean-annotation.xml</config>
+		<config>src/main/resources/bean-genericdi.xml</config>
 	</configs>
 	<autoconfigs>
 	</autoconfigs>
