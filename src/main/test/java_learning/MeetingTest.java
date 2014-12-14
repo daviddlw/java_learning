@@ -13,6 +13,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import com.david.meeting.CurrentConditionDisplay;
+import com.david.meeting.CustomStack;
 import com.david.meeting.ForecastDisplay;
 import com.david.meeting.ICustomObserver;
 import com.david.meeting.NewObserver;
@@ -25,6 +26,39 @@ public class MeetingTest
 	@Before
 	public void setUp() throws Exception
 	{
+	}
+
+	@Test
+	public void testCustomStack() throws InterruptedException
+	{
+		CustomStack<Integer> customStack = new CustomStack<Integer>(10, Integer.class);
+		customStack.push(1);
+		customStack.push(2);
+		customStack.push(3);
+		customStack.push(4);
+		customStack.push(5);
+		customStack.push(6);
+		customStack.push(7);
+		customStack.push(8);
+		customStack.push(9);
+		customStack.push(10);
+		customStack.push(11);
+		System.err.println(customStack.getCount());
+		Thread.sleep(500);
+		System.out.println(customStack.pop());
+		Thread.sleep(500);
+		System.err.println(customStack.getCount());
+		Thread.sleep(500);
+		System.out.println(customStack.pop());
+		Thread.sleep(500);
+		System.out.println(customStack.pop());
+		Thread.sleep(500);
+		System.err.println(customStack.getCount());
+		Thread.sleep(500);
+		System.out.println(customStack.pop());
+		Thread.sleep(500);
+		System.out.println("customStack is empty: " + customStack.empty());
+		Thread.sleep(500);
 	}
 
 	@Test
