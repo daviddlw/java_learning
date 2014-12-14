@@ -3,7 +3,7 @@ package com.david.meeting;
 import java.util.ArrayList;
 import java.util.List;
 
-public class WeatherData
+public class WeatherData implements ISubject
 {
 	private double temperature;
 	private double humidity;
@@ -16,11 +16,13 @@ public class WeatherData
 		// TODO Auto-generated constructor stub
 	}
 
+	@Override
 	public void registerObserver(ICustomObserver observer)
 	{
 		observerLs.add(observer);
 	}
 
+	@Override
 	public void removeObserver(String name)
 	{
 		ICustomObserver delObj = null;
@@ -49,10 +51,7 @@ public class WeatherData
 		this.humidity = humidity;
 		this.pressure = pressure;
 		System.err.println("温度发生改变，通知所有观察者...");
-		for (ICustomObserver item : observerLs)
-		{
-			item.update(new WeatherData(temperature, humidity, pressure));
-		}
+		notifyObservers();
 	}
 
 	public double getTemperature()
@@ -89,6 +88,16 @@ public class WeatherData
 	public String toString()
 	{
 		return "WeatherData [temperature=" + temperature + ", humidity=" + humidity + ", pressure=" + pressure + "]";
+	}
+
+	@Override
+	public void notifyObservers()
+	{
+		// TODO Auto-generated method stub
+		for (ICustomObserver item : observerLs)
+		{
+			item.update(new WeatherData(temperature, humidity, pressure));
+		}
 	}
 
 }
