@@ -1,5 +1,9 @@
 package java_learning;
 
+import java.beans.BeanInfo;
+import java.beans.IntrospectionException;
+import java.beans.Introspector;
+import java.beans.PropertyDescriptor;
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.ByteArrayOutputStream;
@@ -7,18 +11,17 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.Arrays;
 
 import org.junit.Before;
 import org.junit.Test;
 
-import sun.net.www.content.text.plain;
-
 import com.david.algorithm.CustomQueue;
 import com.david.algorithm.CustomStack;
 import com.david.algorithm.Node;
 import com.david.algorithm.SingletonClassTest;
-import com.david.algorithm.SortReview;
 
 public class TestAlgorithm
 {
@@ -145,102 +148,209 @@ public class TestAlgorithm
 		}
 	}
 
-	/**
-	 * 新加入节点向上调整堆(堆插入节点)
-	 * 
-	 * @param a
-	 */
-	private void minHeapFixUp(int a[], int i)
+	@Test
+	public void testSort()
 	{
-		int temp, j;
-		temp = a[i];
-		j = (i - 1) / 2; // 父节点
+		int[] arr = new int[] { 2, 3, 5, 12, 51, 99, 62, 101, 88, 3, 13, 66 };
+		// SortReview.quickSort(arr, 0, arr.length - 1);
+		// SortReview.heapSort(arr, arr.length);
+		quickSort(arr, 0, arr.length - 1);
+		// heapSort(arr, arr.length);
+		System.out.println(Arrays.toString(arr));
 
-		while (j >= 0 && i != 0)
+		int index = binarySearch(arr, 0, arr.length - 1, 5);
+		System.out.println("带搜索关键词索引：" + index);
+
+	}
+
+	public static int binarySearch(int[] arr, int low, int high, int key)
+	{
+		int middle;
+		while (low <= high)
 		{
-			if (a[j] <= temp)
-				break;
-
-			a[i] = a[j];
-			i = j;
-			j = (i - 1) / 2;
+			middle = low / 2 + (high - high / 2);// 防止low+high超出int长度溢出
+			if (arr[middle] < key)
+			{
+				low = middle + 1;
+			} else if (arr[middle] > key)
+			{
+				high = middle - 1;
+			} else
+			{
+				return middle;
+			}
 		}
 
-		a[i] = temp;
+		return -1;
 	}
 
-	/**
-	 * 堆中插入新数值
-	 * 
-	 * @param a
-	 * @param n
-	 * @param num
-	 */
-	private void minHeapAddNumber(int[] a, int n, int num)
+	public static void quickSort(int[] arr, int low, int high)
 	{
-		a[n] = num;
-		minHeapFixUp(a, n);
-	}
+		if (low >= high)
+			return;
 
-	/**
-	 * 从i节点开始调整,n为节点总数 从0开始计算 i节点的子节点为 2*i+1, 2*i+2
-	 * 
-	 * @param a
-	 * @param i
-	 * @param n
-	 */
-	private void minHeapFixDown(int[] a, int i, int n)
-	{
-		int j, temp;
-		temp = a[i];
-		j = 2 * i + 1;
+		int start = low;
+		int end = high;
+		int key = arr[start];
 
-		while (j < n)
+		while (start < end)
 		{
-			// 如左右孩子中小的那个
-			if (j + 1 < n && a[j + 1] < a[j])
+			while (start < end && arr[end] >= key)
 			{
-				j++;
+				end--;
 			}
 
-			if (a[j] > temp) // 如果父节点小于子节点不需要作交换
-				break;
+			arr[start] = arr[end];
 
-			a[i] = a[j];
-			i = j;
-			j = 2 * i + 1;
+			while (start < end && arr[start] <= key)
+			{
+				start++;
+			}
+
+			arr[end] = arr[start];
 		}
 
-		a[i] = temp;
-	}
-
-	public void minHeapDeleteNumber(int[] a, int num)
-	{
+		arr[start] = key;
+		quickSort(arr, low, start - 1);
+		quickSort(arr, start + 1, high);
 
 	}
 
-	private void swap(int a, int b)
+	public static void heapSort(int[] arr, int length)
 	{
-		int temp = 0;
-		temp = a;
-		a = b;
-		b = temp;
+		int temp;
+		// 从第一个非叶子节点开始向上调整
+		for (int i = length / 2 - 1; i >= 0; i--)
+		{
+			heapAdjust(arr, i, length);
+		}
+
+		// 将堆顶元素丢到最后的有序列，然后倒数第二个一次类推调整
+		for (int i = arr.length - 1; i > 0; i--)
+		{
+			temp = arr[i];
+			arr[i] = arr[0];
+			arr[0] = temp;
+
+			heapAdjust(arr, 0, i);
+		}
+	}
+
+	private static void heapAdjust(int[] arr, int i, int length)
+	{
+		int temp, child;
+		while (2 * i + 1 < length)
+		{
+			child = 2 * i + 1;
+			// 选择子节点中交大的那个元素父亲节点作比较，构建大跟堆
+			if (child < length - 1 && arr[child] < arr[child + 1])
+			{
+				child++;
+			}
+
+			if (arr[i] < arr[child])
+			{
+				temp = arr[i];
+				arr[i] = arr[child];
+				arr[child] = temp;
+
+				i = child;
+			} else
+			{
+				break;
+			}
+		}
 	}
 
 	@Test
-	public void testSwap()
+	public void testReflection()
 	{
-		int[] arr = new int[] { 1, 2 };
-		swap(arr[0], arr[1]);
-		System.out.println(Arrays.toString(arr));
+		try
+		{
+			User user = new User();
+			PropertyDescriptor pd = new PropertyDescriptor("id", User.class);
+			Method setIdMethod = pd.getWriteMethod();
+			setIdMethod.invoke(user, 1);
+			Method getIdMethod = pd.getReadMethod();
+			Object obj = getIdMethod.invoke(user, new Object[] {});
+			System.out.println(obj);
+			System.out.println(user);
+
+		} catch (IntrospectionException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IllegalAccessException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IllegalArgumentException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (InvocationTargetException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		BeanInfo beanInfo;
+		try
+		{
+			beanInfo = Introspector.getBeanInfo(User.class);
+			System.out.println("getBeanDescriptor: " + beanInfo.getBeanDescriptor());
+			System.out.println("getMethodDescriptors: " + Arrays.toString(beanInfo.getMethodDescriptors()));
+			System.out.println("getPropertyDescriptors: " + Arrays.toString(beanInfo.getPropertyDescriptors()));
+		} catch (IntrospectionException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+}
+
+class User
+{
+	private int id;
+	private String name;
+
+	public User()
+	{
+		super();
+		// TODO Auto-generated constructor stub
 	}
 
-	@Test
-	public void testQuickSort()
+	public User(int id, String name)
 	{
-		int[] arr = new int[] { 2, 3, 5, 12, 51, 99, 62, 88, 3, 13, 66 };
-		// SortReview.quickSort(arr, 0, arr.length - 1);
-		SortReview.heapSort(arr, arr.length);
-		System.out.println(Arrays.toString(arr));
+		super();
+		this.id = id;
+		this.name = name;
 	}
+
+	@Override
+	public String toString()
+	{
+		return "User [id=" + id + ", name=" + name + "]";
+	}
+
+	public int getId()
+	{
+		return id;
+	}
+
+	public void setId(int id)
+	{
+		this.id = id;
+	}
+
+	public String getName()
+	{
+		return name;
+	}
+
+	public void setName(String name)
+	{
+		this.name = name;
+	}
+
 }
