@@ -176,6 +176,14 @@
 		</dependency>
 		<!-- Test dependencies End -->
 
+<!-- 		<dependency>
+			<groupId>c3p0</groupId>
+			<artifactId>com.mchange</artifactId>
+			<version>0.9.1.2</version>
+			<scope>system</scope>
+			<systemPath>${project.basedir}/lib/c3p0-0.9.1.2.jar</systemPath>
+		</dependency>
+ -->
 	</dependencies>
 	<build>
 		<finalName>jdbc_project</finalName>

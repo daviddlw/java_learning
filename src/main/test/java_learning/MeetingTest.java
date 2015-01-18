@@ -1,5 +1,7 @@
 package java_learning;
 
+import java.beans.BeanInfo;
+import java.beans.PropertyDescriptor;
 import java.io.File;
 import java.io.UnsupportedEncodingException;
 import java.math.BigDecimal;
@@ -7,7 +9,10 @@ import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
+import java.util.HashMap;
+import java.util.Hashtable;
 import java.util.List;
+import java.util.concurrent.ConcurrentHashMap;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -26,6 +31,104 @@ public class MeetingTest
 	@Before
 	public void setUp() throws Exception
 	{
+	}
+
+	@Test
+	public void sortTest()
+	{
+		int[] arr = new int[] { 9, 8, 7, 6, 5, 4, 3, 2, 1 };
+		// qSort(arr, 0, arr.length - 1);
+		hSort(arr, arr.length);
+		System.out.println(Arrays.toString(arr));
+	}
+
+	private void hAdjust(int[] arr, int i, int length)
+	{
+		int temp, child;
+		while (i * 2 + 1 < length)
+		{
+			child = i * 2 + 1;
+			if (child < length - 1 && arr[child] < arr[child + 1])
+			{
+				child++;
+			}
+
+			if (arr[i] < arr[child])
+			{
+				temp = arr[i];
+				arr[i] = arr[child];
+				arr[child] = temp;
+
+				i = child;
+			} else
+			{
+				break;
+			}
+		}
+	}
+
+	private void hSort(int[] arr, int length)
+	{
+		int temp;
+		for (int i = length / 2 - 1; i >= 0; i--)
+		{
+			hAdjust(arr, i, length);
+		}
+
+		for (int i = length - 1; i > 0; i--)
+		{
+			temp = arr[i];
+			arr[i] = arr[0];
+			arr[0] = temp;
+
+			heapAdjust(arr, 0, i);
+		}
+	}
+
+	private void qSort(int[] arr, int low, int high)
+	{
+		if (low >= high)
+			return;
+
+		int start = low;
+		int end = high;
+		int key = arr[low];
+
+		while (start < end)
+		{
+			while (start < end && arr[end] >= key)
+			{
+				end--;
+			}
+			arr[start] = arr[end];
+
+			while (start < end && arr[start] <= key)
+			{
+				start++;
+			}
+			arr[end] = arr[start];
+		}
+
+		arr[start] = key;
+
+		qSort(arr, low, start - 1);
+		qSort(arr, start + 1, high);
+	}
+
+	@Test
+	public void testString()
+	{
+		String aa = "aa";
+		String bb = "aa";
+		System.out.println(aa.equals(bb));
+		System.out.println(aa == bb);
+		System.out.println("aa.hashcode: " + aa.hashCode() + "-bb.hashcode: " + bb.hashCode());
+
+		String cc = new String("aa");
+		String dd = new String("aa");
+		System.out.println(cc.equals(dd));
+		System.out.println(cc == dd);
+		System.out.println("cc.hashcode: " + cc.hashCode() + "-dd.hashcode: " + dd.hashCode());
 	}
 
 	@Test
@@ -59,6 +162,7 @@ public class MeetingTest
 		Thread.sleep(500);
 		System.out.println("customStack is empty: " + customStack.empty());
 		Thread.sleep(500);
+
 	}
 
 	@Test
@@ -240,5 +344,30 @@ public class MeetingTest
 
 		quickSort(arr, low, start - 1);
 		quickSort(arr, start + 1, high);
+	}
+
+	@Test
+	public void variantObjCreate()
+	{
+		VariantTest v1 = new VariantTest();
+		VariantTest v2 = new VariantTest();
+		VariantTest v3 = new VariantTest();
+		Hashtable<String, String> hst = new Hashtable<String, String>();
+		HashMap<String, String> hsm = new HashMap<String, String>();
+		ConcurrentHashMap<String, String> chs = new ConcurrentHashMap<String, String>();
+		chs.get("");
+	}
+}
+
+class VariantTest
+{
+	private static int variantVar = 0;
+	private static int instanceVar = 0;
+
+	public VariantTest()
+	{
+		variantVar++;
+		instanceVar++;
+		System.out.println("variantVar: " + variantVar + "instanceVar: " + instanceVar);
 	}
 }
