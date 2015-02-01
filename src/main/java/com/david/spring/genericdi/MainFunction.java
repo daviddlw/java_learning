@@ -14,7 +14,7 @@ public class MainFunction
 	{
 		ApplicationContext ctx = new ClassPathXmlApplicationContext("bean-genericdi.xml");
 		BaseService<User> userService = (UserService)ctx.getBean("userService");
-		userService.execte();
+		userService.execute();
 		System.out.println(ctx.getEnvironment());
 	}
 }

@@ -7,10 +7,11 @@ public class BaseService<T>
 	@Autowired
 	private BaseRepository<T> repository;
 
-	public void execte()
+	public void execute()
 	{
 		System.out.println("service execute start...");
 		repository.execute();
+		repository.add();
 		System.out.println("service execute end...");
 	}
 }

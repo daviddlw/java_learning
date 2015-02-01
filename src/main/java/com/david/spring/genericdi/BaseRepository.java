@@ -6,4 +6,9 @@ public class BaseRepository<T>
 	{
 		System.out.println("repository execute...");
 	}
+	
+	public void add()
+	{
+		System.out.println("add operations...");
+	}
 }
