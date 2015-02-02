@@ -5,7 +5,6 @@ import org.springframework.stereotype.Component;
 @Component
 public class CalculatorServiceImpl implements CalculatorService
 {
-
 	@Override
 	public int add(int i, int j)
 	{
@@ -34,7 +33,7 @@ public class CalculatorServiceImpl implements CalculatorService
 	public int divide(int i, int j)
 	{
 		// TODO Auto-generated method stub
-		int result = j == 0 ? 0 : i / j;
+		int result = i / j;
 		return result;
 	}
 

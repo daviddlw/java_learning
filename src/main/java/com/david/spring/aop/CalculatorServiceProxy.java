@@ -26,7 +26,7 @@ public class CalculatorServiceProxy
 		// 得到需要代理的类的加载器，因为他不是被new出来的
 		ClassLoader loader = target.getClass().getClassLoader();
 		// 得到需要代理的类的接口类型数组
-//		Class<?>[] interfaces = new Class[] { CalculatorService.class };
+		// Class<?>[] interfaces = new Class[] { CalculatorService.class };
 		Class<?>[] interfaces = target.getClass().getInterfaces();
 		// invokeHandler真正的代理执行的方法
 		InvocationHandler handler = new InvocationHandler() {
@@ -37,8 +37,21 @@ public class CalculatorServiceProxy
 				// 一般不调用proxy自己的方法，因为会引起死循环
 				String info = String.format("The method %s start with %s", method.getName(), Arrays.toString(args));
 				System.err.println(info);
-				// 调用相关方法invoke
-				Object result = method.invoke(target, args);
+				Object result = null;
+				try
+				{
+					//前置通知
+					
+					// 调用相关方法invoke
+					result = method.invoke(target, args);
+					
+					//后置通知
+				} catch (Exception e)
+				{					
+					//异常通知
+					e.printStackTrace();
+				}
+
 				String resultInfo = String.format("The result is %s", result.toString());
 				System.err.println(resultInfo);
 				return result;
