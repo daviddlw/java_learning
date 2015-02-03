@@ -10,8 +10,7 @@ public class AopspDemo
 		ApplicationContext ctx = new ClassPathXmlApplicationContext("aop-spring.xml");
 		CalculatorService service = (CalculatorService) ctx.getBean(CalculatorService.class);
 		int add = service.add(1, 2);
-		int divide = service.divide(12, 0);
-		System.out.println(add);
-		System.out.println(divide);
+		System.out.println();
+		int divide = service.divide(12, 6);
 	}
 }
