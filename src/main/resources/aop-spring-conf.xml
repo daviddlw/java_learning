@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.0.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd">
+
+	<!-- <context:property-placeholder location="classpath:log4j.properties"/> -->
+	
+	<!-- 实体bean -->
+	<bean id="calculatorService" class="com.david.spring.aopconf.CalculatorServiceImpl"></bean>
+
+	<!-- 配置切面bean -->
+	<bean id="logAspectJ" class="com.david.spring.aopconf.LoggingAspectJ"></bean>
+
+	<!-- 切面bean -->
+	<bean id="validateLogAspect" class="com.david.spring.aopconf.ValidationLoggingAspectJ"></bean>
+
+	<!-- 配置AOP切面 -->
+	<aop:config>
+		<!-- 配置切面表达式(包名别打错) -->
+		<aop:pointcut
+			expression="execution(public int com.david.spring.aopconf.CalculatorService.*(int, int))"
+			id="joinPoint" />
+		<aop:aspect order="2" ref="logAspectJ">
+			<aop:before method="beforeMethod" pointcut-ref="joinPoint" />
+			<aop:after method="afterMethod" pointcut-ref="joinPoint"/>
+			<aop:after-throwing method="afterThrowingMethod" pointcut-ref="joinPoint" throwing="ex" />
+			<aop:after-returning method="afterReturningMethod" pointcut-ref="joinPoint" returning="results" />
+		</aop:aspect>
+		<aop:aspect order="1" ref="validateLogAspect">
+			<aop:before method="validationMethod" pointcut-ref="joinPoint"/>
+		</aop:aspect>
+	</aop:config>
+
+</beans>

@@ -49,7 +49,7 @@ public class LoggingAspectJ
 	}
 
 	@AfterThrowing(value = "declareJoinPointExpression()", throwing = "ex")
-	public void afterReturningMethod(JoinPoint point, Exception ex)
+	public void afterThrowingMethod(JoinPoint point, Exception ex)
 	{
 		String methodName = point.getSignature().getName();
 		System.out.println("The method " + methodName + " occurs exception: " + ex);
