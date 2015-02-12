@@ -109,7 +109,7 @@ public class TestJdbcTemplate
 	{
 		String sql = "insert into department (name) values (:name)";
 		Department dept = new Department();
-		dept.setName("市场部");
+		dept.setName("市场部1");
 		SqlParameterSource dataSource = new BeanPropertySqlParameterSource(dept);
 		int count = npJdbcTemplate.update(sql, dataSource);
 		System.out.println("成功增加了：" + count);
