@@ -16,6 +16,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
+import org.apache.commons.lang3.StringUtils;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -34,13 +35,32 @@ public class TestIO
 		String txtStr = "窗前明月光\r\n疑是地上霜\r\n举头望明月\r\n低头思故乡";
 		return txtStr;
 	}
-	
+
+	@Test
+	public void testWriterAndReader() throws IOException
+	{
+		String txt = getTxt();
+		String dest = "D:" + File.separator + "IOTest" + File.separator + "readAndWriter.txt";
+		FileWriter fw = new FileWriter(new File(dest));
+		fw.write(txt);
+//		fw.flush();
+		fw.close();
+		
+		FileReader fr = new FileReader(new File(dest));
+		char[] buffers = new char[txt.length()];
+		fr.read(buffers);
+		fr.close();
+		
+		String txtStr = String.valueOf(buffers, 0, buffers.length);
+		System.out.println(txtStr);
+	}
+
 	@Test
 	public void testPipedStreamDemo() throws IOException
 	{
 		PipedStreamDemo.runPipedStreamDemo();
 	}
-	
+
 	@Test
 	public void testBufferdDataStreamDemo() throws IOException
 	{
@@ -94,7 +114,7 @@ public class TestIO
 			}
 		}
 	}
-	
+
 	@Test
 	public void testDataStreamDemo() throws IOException
 	{
@@ -106,7 +126,7 @@ public class TestIO
 		out.writeChar(65);
 		out.writeBoolean(true);
 		out.close();
-		
+
 		System.out.println(in.readInt());
 		System.out.println(in.readDouble());
 		System.out.println(in.readChar());

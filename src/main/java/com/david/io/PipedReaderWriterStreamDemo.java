@@ -1,10 +1,10 @@
 package com.david.io;
 
 import java.io.IOException;
-import java.io.PipedInputStream;
-import java.io.PipedOutputStream;
+import java.io.PipedReader;
+import java.io.PipedWriter;
 
-public class PipedStreamDemo
+public class PipedReaderWriterStreamDemo
 {
 	public static void main(String[] args) throws IOException
 	{
@@ -13,11 +13,11 @@ public class PipedStreamDemo
 	
 	public static void runPipedStreamDemo() throws IOException
 	{
-		PipedOutputStream out = new PipedOutputStream();
-		PipedInputStream in = new PipedInputStream(out);
+		PipedWriter out = new PipedWriter();
+		PipedReader in = new PipedReader(out);
 		
-		Thread th_r = new Thread(new MyReader(in));
-		Thread th_w = new Thread(new MyWriter(out));
+		Thread th_r = new Thread(new MyReader2(in));
+		Thread th_w = new Thread(new MyWriter2(out));
 		
 		th_w.start();
 		th_r.start();
@@ -25,17 +25,17 @@ public class PipedStreamDemo
 	}
 }
 
-class MyReader implements Runnable
+class MyReader2 implements Runnable
 {
 
-	private PipedInputStream pin;
+	private PipedReader pin;
 
-	public MyReader()
+	public MyReader2()
 	{
 		super();
 	}
 
-	public MyReader(PipedInputStream pin)
+	public MyReader2(PipedReader pin)
 	{
 		super();
 		this.pin = pin;
@@ -76,31 +76,30 @@ class MyReader implements Runnable
 
 }
 
-class MyWriter implements Runnable
+class MyWriter2 implements Runnable
 {
-	private PipedOutputStream pout;
+	private PipedWriter pout;
 
-	public MyWriter(PipedOutputStream pout)
+	public MyWriter2(PipedWriter pout)
 	{
 		super();
 		this.pout = pout;
 	}
 
-	public MyWriter()
+	public MyWriter2()
 	{
 		super();
 	}
 
 	@Override
 	public void run()
-	{
-		String s = "Hello World!";
-//		String s = "你好，中国";
+	{		
+		String s = "你好，中国";
 		try
 		{
 			System.out.println("等待3秒写入......");
 			Thread.sleep(3000);
-			pout.write(s.getBytes());
+			pout.write(s);
 		} catch (IOException e)
 		{
 			// TODO Auto-generated catch block
