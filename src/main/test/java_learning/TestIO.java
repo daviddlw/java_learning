@@ -35,8 +35,7 @@ public class TestIO
 	@Test
 	public void zipFile()
 	{
-		ZipStreamDemo.zipFile();
-		
+		ZipStreamDemo.zipFile();	
 	}
 	
 	@Test
