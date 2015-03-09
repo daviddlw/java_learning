@@ -15,12 +15,14 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.net.URL;
+import java.net.URLClassLoader;
 
-import org.apache.commons.lang3.StringUtils;
 import org.junit.Before;
 import org.junit.Test;
 
 import com.david.io.PipedStreamDemo;
+import com.david.io.ZipStreamDemo;
 
 public class TestIO
 {
@@ -28,6 +30,30 @@ public class TestIO
 	@Before
 	public void setUp() throws Exception
 	{
+	}
+	
+	@Test
+	public void zipFile()
+	{
+		ZipStreamDemo.zipFile();
+		
+	}
+	
+	@Test
+	public void unZipFile()
+	{
+		ZipStreamDemo.unZipFile();
+	}
+	
+	@Test
+	public void testLoadClass() throws ClassNotFoundException, IOException
+	{
+		String path ="file://F:"+File.separator+"dubboservice.jar";
+		System.out.println(path);
+		URL url = new URL(path);
+		ClassLoader cLoader = new URLClassLoader(new URL[]{url}, Thread.currentThread().getContextClassLoader());
+		Class<?> type = cLoader.loadClass("com.hupu.service.DubboService");
+		
 	}
 
 	private String getTxt()
