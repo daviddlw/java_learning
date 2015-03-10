@@ -2,17 +2,20 @@ package java_learning;
 
 import static org.junit.Assert.*;
 
+import java.io.IOException;
 import java.nio.Buffer;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.nio.CharBuffer;
 import java.nio.IntBuffer;
+import java.nio.channels.Channel;
 import java.util.Arrays;
 
 import org.junit.Before;
 import org.junit.Test;
 
 import com.david.nio.BufferDemo;
+import com.david.nio.ChannelDemo;
 
 public class TestNio
 {
@@ -21,6 +24,12 @@ public class TestNio
 	@Before
 	public void setUp() throws Exception
 	{
+	}
+	
+	@Test
+	public void testChannelDemo() throws IOException
+	{
+		ChannelDemo.testFileChannel();
 	}
 
 	@Test
