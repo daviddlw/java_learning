@@ -56,6 +56,7 @@ public class TestNio
 		char[] result = new char[s.length()];
 		cbf.get(result, 0, cbf.remaining());
 		System.out.println(String.valueOf(result));
+		System.out.println("测试成功...");
 	}
 
 }
