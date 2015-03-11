@@ -186,6 +186,13 @@
 			<version>2.5.0</version>
 		</dependency>
 
+		<dependency>
+			<groupId>com.101tec</groupId>
+			<artifactId>zkclient</artifactId>
+			<version>0.3</version>
+		</dependency>
+
+
 		<!-- Test dependencies Start -->
 		<dependency>
 			<groupId>junit</groupId>
