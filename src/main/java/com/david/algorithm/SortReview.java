@@ -1,15 +1,24 @@
 package com.david.algorithm;
 
-import sun.print.resources.serviceui;
+import java.util.Arrays;
 
 /**
- * 排序复习
+ * sort
  * 
  * @author pc
  * 
  */
 public class SortReview
 {
+	public static void main(String[] args)
+	{
+		// int[] arr = new int[] { 3, 1, 4, 1, 7, 3 };
+		int[] arr = new int[] { 32, 15, 18, 8, 13, 20, 5 };
+//		 quickSort(arr, 0, arr.length - 1);
+		heapSort(arr, arr.length);
+		System.err.println(Arrays.toString(arr));
+	}
+
 	/**
 	 * 快速排序
 	 * 
@@ -66,7 +75,7 @@ public class SortReview
 		{
 			child = 2 * i + 1;
 			// 得到子节点中较大的那个和父节点作比较
-			if (child < length - 1 && a[child] < a[child + 1]) //大根变小根，这里边大于号
+			if (child < length - 1 && a[child] < a[child + 1]) // 大根变小根，这里边大于号
 				child++;
 
 			if (a[i] < a[child])
@@ -92,7 +101,7 @@ public class SortReview
 			heapAjust(a, i, length);
 		}
 
-		//交换第一个元素
+		// 交换第一个元素
 		for (int i = length - 1; i > 0; i--)
 		{
 			temp = a[i];
